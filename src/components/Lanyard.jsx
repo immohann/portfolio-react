@@ -63,7 +63,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
     c.width = c.height = size;
     const ctx = c.getContext('2d');
     ctx.clearRect(0, 0, size, size);
-    ctx.fillStyle = '#4a4a63';
+    ctx.fillStyle = '#2b2b38';
     const n = 6;
     const gap = 4;
     const cell = (size - gap * (n + 1)) / n;
@@ -127,44 +127,40 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
             onPointerUp={e => (e.target.releasePointerCapture(e.pointerId), drag(false))}
             onPointerDown={e => (e.target.setPointerCapture(e.pointerId), drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation()))))}
           >
-            {/* subtle frame / border */}
-            <RoundedBox args={[1.64, 2.29, 0.045]} radius={0.12} smoothness={5} position={[0, 0, -0.006]}>
-              <meshStandardMaterial color="#2f2f44" roughness={0.6} metalness={0.2} />
-            </RoundedBox>
-            {/* card body - dark slate, rounded */}
-            <RoundedBox args={[1.6, 2.25, 0.05]} radius={0.11} smoothness={5}>
-              <meshPhysicalMaterial color="#101018" roughness={0.42} metalness={0.35} clearcoat={0.7} clearcoatRoughness={0.35} />
+            {/* card body - light, slim, rounded */}
+            <RoundedBox args={[1.6, 2.25, 0.03]} radius={0.1} smoothness={6}>
+              <meshPhysicalMaterial color="#f4f2ee" roughness={0.35} metalness={0} clearcoat={1} clearcoatRoughness={0.25} />
             </RoundedBox>
             {/* top code label */}
-            <Text font={FONT_MONO} position={[-0.66, 0.74, 0.03]} fontSize={0.1} color="#8b5cff" anchorX="left" anchorY="middle" letterSpacing={0.16}>
+            <Text font={FONT_MONO} position={[-0.66, 0.74, 0.02]} fontSize={0.1} color="#7c3aed" anchorX="left" anchorY="middle" letterSpacing={0.16}>
               MOHAN.DOGRA
             </Text>
             {/* violet hairline accent */}
-            <mesh position={[-0.4, 0.34, 0.028]}>
-              <boxGeometry args={[0.5, 0.026, 0.012]} />
-              <meshStandardMaterial color="#6d3cff" emissive="#6d3cff" emissiveIntensity={0.6} />
+            <mesh position={[-0.4, 0.34, 0.018]}>
+              <boxGeometry args={[0.5, 0.024, 0.008]} />
+              <meshStandardMaterial color="#6d3cff" emissive="#6d3cff" emissiveIntensity={0.35} />
             </mesh>
             {/* big name */}
-            <Text font={FONT_GROTESK} position={[-0.66, -0.04, 0.03]} fontSize={0.26} color="#f4f4f7" anchorX="left" anchorY="middle" lineHeight={1.05} maxWidth={1.4}>
+            <Text font={FONT_GROTESK} position={[-0.66, -0.04, 0.02]} fontSize={0.26} color="#1d1d1f" anchorX="left" anchorY="middle" lineHeight={1.05} maxWidth={1.4}>
               {'Data\nScientist'}
             </Text>
             {/* role */}
-            <Text position={[-0.66, -0.52, 0.03]} fontSize={0.1} color="#9a9aae" anchorX="left" anchorY="middle">
+            <Text font={FONT_MONO} position={[-0.66, -0.52, 0.02]} fontSize={0.095} color="#6b6b70" anchorX="left" anchorY="middle" letterSpacing={0.05}>
               Bentonville, AR
             </Text>
             {/* QR grid */}
-            <mesh position={[0.44, -0.74, 0.028]}>
-              <planeGeometry args={[0.42, 0.42]} />
+            <mesh position={[0.44, -0.74, 0.018]}>
+              <planeGeometry args={[0.4, 0.4]} />
               <meshBasicMaterial map={qrTex} transparent toneMapped={false} />
             </mesh>
             {/* id */}
-            <Text font={FONT_MONO} position={[-0.66, -0.98, 0.03]} fontSize={0.085} color="#55556e" anchorX="left" anchorY="middle" letterSpacing={0.1}>
+            <Text font={FONT_MONO} position={[-0.66, -0.98, 0.02]} fontSize={0.085} color="#a7a7b0" anchorX="left" anchorY="middle" letterSpacing={0.1}>
               ID-2026-MD
             </Text>
             {/* punch hole + clip */}
             <mesh position={[0, 1.05, 0]}>
-              <torusGeometry args={[0.12, 0.03, 12, 24]} />
-              <meshStandardMaterial color="#c9ccd3" metalness={0.9} roughness={0.3} />
+              <torusGeometry args={[0.11, 0.028, 12, 24]} />
+              <meshStandardMaterial color="#b7bac1" metalness={0.85} roughness={0.3} />
             </mesh>
           </group>
         </RigidBody>
