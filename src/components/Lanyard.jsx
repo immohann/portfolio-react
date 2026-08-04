@@ -3,7 +3,7 @@
 // so it runs without the original card.glb / lanyard.png binaries.
 // Requires: @react-three/fiber, @react-three/drei, @react-three/rapier, meshline, three
 // TODO(photo): swap the light "photo" plane material below for a texture of your headshot.
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { Environment, Lightformer, Text, RoundedBox } from '@react-three/drei';
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
@@ -55,23 +55,6 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
   const [curve] = useState(() => new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]));
   const [dragged, drag] = useState(false);
   const [hovered, hover] = useState(false);
-
-  // clean uniform dot-grid block for the card (transparent background)
-  const qrTex = useMemo(() => {
-    const size = 120;
-    const c = document.createElement('canvas');
-    c.width = c.height = size;
-    const ctx = c.getContext('2d');
-    ctx.clearRect(0, 0, size, size);
-    ctx.fillStyle = '#2b2b38';
-    const n = 6;
-    const gap = 4;
-    const cell = (size - gap * (n + 1)) / n;
-    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) ctx.fillRect(gap + i * (cell + gap), gap + j * (cell + gap), cell, cell);
-    const t = new THREE.CanvasTexture(c);
-    t.magFilter = THREE.NearestFilter;
-    return t;
-  }, []);
 
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
@@ -148,11 +131,6 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
             <Text font={FONT_MONO} position={[-0.66, -0.52, 0.02]} fontSize={0.095} color="#6b6b70" anchorX="left" anchorY="middle" letterSpacing={0.05}>
               Bentonville, AR
             </Text>
-            {/* QR grid */}
-            <mesh position={[0.44, -0.74, 0.018]}>
-              <planeGeometry args={[0.4, 0.4]} />
-              <meshBasicMaterial map={qrTex} transparent toneMapped={false} />
-            </mesh>
             {/* id */}
             <Text font={FONT_MONO} position={[-0.66, -0.98, 0.02]} fontSize={0.085} color="#a7a7b0" anchorX="left" anchorY="middle" letterSpacing={0.1}>
               ID-2026-MD
